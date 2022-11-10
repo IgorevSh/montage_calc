@@ -1,4 +1,4 @@
-# montage_calc_vue2
+# montage_calc
 
 ## Установить зависимости
 ```
