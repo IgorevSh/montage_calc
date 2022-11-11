@@ -2,7 +2,9 @@
   <v-card>
     <v-card-actions>
       <v-spacer />
-      <v-btn color="green darken-1" text @click="closeModal"> X </v-btn>
+      <v-btn @click="closeModal" text color="primary" class="ma-2" elevation="0"
+        >Закрыть</v-btn
+      >
     </v-card-actions>
     <v-card-text><slot /></v-card-text>
   </v-card>

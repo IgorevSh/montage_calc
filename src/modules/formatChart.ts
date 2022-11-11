@@ -36,7 +36,10 @@ export default function formatChart(
       monthlyPay: month,
       mainPay: Math.ceil(sum / months),
       debtPay: Math.ceil((sum * percent) / (100 * months)),
-      leastPay: (sum * (100 + percent)) / 100 - i * month,
+      leastPay:
+        (sum * (100 + percent)) / 100 - (i + 1) * month > 0
+          ? (sum * (100 + percent)) / 100 - (i + 1) * month
+          : 0,
     };
     resultTable.push(row);
   }

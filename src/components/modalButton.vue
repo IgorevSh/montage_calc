@@ -20,10 +20,11 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
 import chartModal from "@/components/chartModal";
 import lineChart from "@/components/lineChart";
 import formatChart from "@/modules/formatChart";
-export default {
+export default defineComponent({
   name: "modalButton",
   components: {
     lineChart,
@@ -46,14 +47,14 @@ export default {
     formatChart,
     makeTable() {
       let { resultTable, headers } = this.formatChart(
-        this.years,
-        this.percent,
-        this.sum,
-        this.month
+        this.years || 0,
+        this.percent || 0,
+        this.sum || 0,
+        this.month || 0
       );
       this.body = resultTable;
       this.headers = headers;
     },
   },
-};
+});
 </script>
