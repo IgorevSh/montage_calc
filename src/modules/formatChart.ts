@@ -28,18 +28,21 @@ export default function formatChart(
   let data: Date = new Date();
   let resultTable = [];
   let months: number = years * 12;
-  for (let i = 0; i < months; i++) {
+
+  for (let i = 0; i <= months; i++) {
+    let lastPay =
+      (sum * (100 + percent)) / 100 - i * month > 0
+        ? (sum * (100 + percent)) / 100 - i * month
+        : 0;
+    let debtPay = Math.ceil((percent / 1200) * lastPay);
     let row = {
       monthYear: `${calendar[(data.getMonth() + i) % 12]} ${
         data.getFullYear() + Math.trunc(i / 12)
       }`,
       monthlyPay: month,
-      mainPay: Math.ceil(sum / months),
-      debtPay: Math.ceil((sum * percent) / (100 * months)),
-      leastPay:
-        (sum * (100 + percent)) / 100 - (i + 1) * month > 0
-          ? (sum * (100 + percent)) / 100 - (i + 1) * month
-          : 0,
+      mainPay: month - debtPay,
+      debtPay: debtPay,
+      leastPay: lastPay,
     };
     resultTable.push(row);
   }
