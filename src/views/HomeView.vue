@@ -67,11 +67,13 @@
                   {{
                     formatPrice(
                       String(
-                        formula(
-                          fullVal.val,
-                          firstVal.val,
-                          totalPercentage,
-                          payday.val
+                        Math.round(
+                          formula(
+                            fullVal.val,
+                            firstVal.val,
+                            totalPercentage,
+                            payday.val
+                          )
                         )
                       )
                     )

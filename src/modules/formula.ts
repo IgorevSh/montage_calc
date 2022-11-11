@@ -4,7 +4,9 @@ export default function formula(
   percentage: number,
   payday: number
 ): number {
-  return Math.ceil(
-    ((credit - firstPrice) * (1 + percentage / 100)) / (payday * 12)
-  );
+  let prctMonth = percentage / 1200;
+  let persentStat =
+    (credit - firstPrice) *
+    (prctMonth / (1 - Math.pow(1 + prctMonth, -payday * 12)));
+  return persentStat;
 }

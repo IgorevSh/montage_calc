@@ -28,23 +28,32 @@ export default function formatChart(
   let data: Date = new Date();
   let resultTable = [];
   let months: number = years * 12;
-
-  for (let i = 0; i <= months; i++) {
-    let lastPay =
-      (sum * (100 + percent)) / 100 - i * month > 0
-        ? (sum * (100 + percent)) / 100 - i * month
-        : 0;
-    let debtPay = Math.ceil((percent / 1200) * lastPay);
+  for (let i = 0; i < months; i++) {
+    let clearDebt = findClearDebt(i, percent, month, sum);
+    let debtPay = clearDebt * (percent / 1200);
     let row = {
       monthYear: `${calendar[(data.getMonth() + i) % 12]} ${
         data.getFullYear() + Math.trunc(i / 12)
       }`,
-      monthlyPay: month,
-      mainPay: month - debtPay,
-      debtPay: debtPay,
-      leastPay: lastPay,
+      monthlyPay: Math.round(month),
+      mainPay: Math.round(month - debtPay),
+      debtPay: Math.round(debtPay),
+      leastPay: Math.round(clearDebt - (month - debtPay)),
     };
     resultTable.push(row);
   }
   return { resultTable, headers };
+}
+function findClearDebt(
+  iter: number,
+  percent: number,
+  month: number,
+  sum: number
+): number {
+  let resultVal = sum;
+  for (let i = 0; i < iter; i++) {
+    let clearPay = resultVal * (percent / 1200);
+    resultVal -= month - clearPay;
+  }
+  return resultVal;
 }
