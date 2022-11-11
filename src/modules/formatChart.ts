@@ -38,7 +38,10 @@ export default function formatChart(
       monthlyPay: Math.round(month),
       mainPay: Math.round(month - debtPay),
       debtPay: Math.round(debtPay),
-      leastPay: Math.round(clearDebt - (month - debtPay)),
+      leastPay:
+        Math.round(clearDebt - (month - debtPay)) > 0
+          ? Math.round(clearDebt - (month - debtPay))
+          : 0,
     };
     resultTable.push(row);
   }
