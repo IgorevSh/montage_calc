@@ -28,9 +28,10 @@ export default function formatChart(
   let data: Date = new Date();
   let resultTable = [];
   let months: number = years * 12;
+  let resultVal = sum;
   for (let i = 0; i < months; i++) {
-    let clearDebt = findClearDebt(i, percent, month, sum);
-    let debtPay = clearDebt * (percent / 1200);
+    let debtPay = resultVal * (percent / 1200);
+    resultVal -= month - debtPay;
     let row = {
       monthYear: `${calendar[(data.getMonth() + i) % 12]} ${
         data.getFullYear() + Math.trunc(i / 12)
@@ -38,25 +39,9 @@ export default function formatChart(
       monthlyPay: Math.round(month),
       mainPay: Math.round(month - debtPay),
       debtPay: Math.round(debtPay),
-      leastPay:
-        Math.round(clearDebt - (month - debtPay)) > 0
-          ? Math.round(clearDebt - (month - debtPay))
-          : 0,
+      leastPay: Math.round(resultVal) > 0 ? Math.round(resultVal) : 0,
     };
     resultTable.push(row);
   }
   return { resultTable, headers };
-}
-function findClearDebt(
-  iter: number,
-  percent: number,
-  month: number,
-  sum: number
-): number {
-  let resultVal = sum;
-  for (let i = 0; i < iter; i++) {
-    let clearPay = resultVal * (percent / 1200);
-    resultVal -= month - clearPay;
-  }
-  return resultVal;
 }
