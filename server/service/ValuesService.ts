@@ -1,4 +1,4 @@
-class ValuesService {
+const valuesService = class ValuesService {
   getVals() {
     return {
       "Покупа недвижимости": {
@@ -30,5 +30,5 @@ class ValuesService {
       },
     };
   }
-}
-export default new ValuesService();
+};
+module.exports = { valService: new valuesService() };

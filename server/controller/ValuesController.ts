@@ -1,14 +1,9 @@
-import ValuesService from "../service/ValuesService";
-// @ts-ignore
-import express from "express";
+const { valService } = require("../service/ValuesService");
+
 class ValuesController {
-  async getVals(
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) {
-    const form = ValuesService.getVals();
+  async getVals(req: any, res: any, next: any) {
+    const form = valService.getVals();
     return res.json(form);
   }
 }
-export default new ValuesController();
+module.exports = { valuesController: new ValuesController() };

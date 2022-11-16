@@ -72,7 +72,7 @@
                             fullVal.val,
                             firstVal.val,
                             totalPercentage,
-                            payday.val
+                            paydayVal.val
                           )
                         )
                       )
@@ -93,17 +93,22 @@
           <v-row>
             <v-col>
               <v-input label="Срок кредита" class="calc_input">
-                <h1>{{ payday.val }} {{ yearGram }}</h1>
+                <h1>{{ paydayVal.val }} {{ yearGram }}</h1>
               </v-input>
             </v-col>
           </v-row>
           <v-row class="calc_button"
             ><modal-button
-              :years="payday.val"
+              :years="paydayVal.val"
               :percent="totalPercentage"
               :sum="fullVal.val - firstVal.val"
               :month="
-                formula(fullVal.val, firstVal.val, totalPercentage, payday.val)
+                formula(
+                  fullVal.val,
+                  firstVal.val,
+                  totalPercentage,
+                  paydayVal.val
+                )
               "
           /></v-row>
         </v-col>
@@ -129,7 +134,7 @@ export default defineComponent({
       switchVal: 0,
       fullVal: { val: 0 },
       firstVal: { val: 0 },
-      payday: { val: 0 },
+      paydayVal: { val: 0 },
       percentage: 11,
       typeCredit: "",
       statsData: {} as any,
@@ -141,6 +146,25 @@ export default defineComponent({
   },
   async created() {
     await this.setDefault();
+  },
+  computed: {
+    yearGram() {
+      if (this.paydayVal.val == 1) {
+        return "год";
+      } else if (this.paydayVal.val > 1 && this.paydayVal.val < 5) {
+        return "года";
+      } else {
+        return "лет";
+      }
+    },
+    valueLinks(): any[] {
+      return [this.fullVal, this.firstVal, this.paydayVal];
+    },
+    totalPercentage(): number {
+      return (
+        this.percentage + (this.switchForm ? -this.switchVal : this.switchVal)
+      );
+    },
   },
   methods: {
     formatPrice,
@@ -157,25 +181,6 @@ export default defineComponent({
       this.percentage = this.currentSettings.percentDefault;
       this.switchVal = this.currentSettings.switch;
       this.inputs = this.currentSettings.inputs;
-    },
-  },
-  computed: {
-    yearGram() {
-      if (this.payday.val == 1) {
-        return "год";
-      } else if (this.payday.val > 1 && this.payday.val < 5) {
-        return "года";
-      } else {
-        return "лет";
-      }
-    },
-    valueLinks(): any[] {
-      return [this.fullVal, this.firstVal, this.payday];
-    },
-    totalPercentage(): number {
-      return (
-        this.percentage + (this.switchForm ? -this.switchVal : this.switchVal)
-      );
     },
   },
   watch: {

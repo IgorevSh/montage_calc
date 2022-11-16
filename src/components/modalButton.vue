@@ -13,7 +13,7 @@
         </v-btn>
       </template>
       <chart-modal @closeModal="dialog = false">
-        <line-chart :body="body" :headers="headers"></line-chart>
+        <full-table :body="body" :headers="headers"></full-table>
       </chart-modal>
     </v-dialog>
   </div>
@@ -22,12 +22,12 @@
 <script>
 import { defineComponent } from "vue";
 import chartModal from "@/components/chartModal";
-import lineChart from "@/components/lineChart";
+import fullTable from "@/components/fullTable";
 import formatChart from "@/modules/formatChart";
 export default defineComponent({
   name: "modalButton",
   components: {
-    lineChart,
+    fullTable,
     chartModal,
   },
   data() {

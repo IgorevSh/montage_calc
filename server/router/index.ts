@@ -1,6 +1,5 @@
-import { Router } from "express";
-const router: any = Router;
-import ValuesController from "../controller/ValuesController";
-const setRout: any = new router();
-setRout.get("/values", ValuesController.getVals);
+const { Router } = require("express");
+const { valuesController } = require("../controller/ValuesController");
+const setRout: any = new Router();
+setRout.get("/values", valuesController.getVals);
 module.exports = setRout;
